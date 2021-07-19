@@ -3,6 +3,7 @@
 > A command line Base 64 encoder and decoder.
 
 ![MIT license](https://img.shields.io/github/license/gomihiko/b64rs)
+![Tests](https://github.com/gomihiko/b64rs/actions/workflows/rust.yml/badge.svg)
 
 
 b64rs is a simple command line tool written in Rust that can encode and decode single lines using base 64 from a command line.

@@ -1,5 +1,5 @@
 name: b64rs
-version: "0.1.0"
+version: "0.2.3"
 about: Encodes and decodes strings using base64
 usage: b64rs [-e | -d] [string]
 args:

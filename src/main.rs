@@ -15,11 +15,11 @@ pub fn main() -> Result<()> {
     // store args
     let encode = matches.is_present("ENCODE");
     let input_string = matches.value_of("INPUT").unwrap();
-    
+
     // encode or decode based on input
     if encode {
         println!("{}", b64rs::encode(input_string));
-    }else {
+    } else {
         println!("{}", b64rs::decode(input_string));
     }
 

@@ -1,18 +1,18 @@
 // helper fns
-pub fn char_to_bin(input: char) -> String {
+fn char_to_bin(input: char) -> String {
     dec_to_bin(input as u8)
 }
 
-pub fn dec_to_bin(input: u8) -> String {
+fn dec_to_bin(input: u8) -> String {
     format!("{:b}", input)
 }
 
-pub fn binary_to_dec(input: &str) -> u8 {
+fn binary_to_dec(input: &str) -> u8 {
     u8::from_str_radix(input, 2).unwrap()
 }
 
 // b64 indices string
-pub const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 // encode
 // encodes a string using base 64.
@@ -22,7 +22,7 @@ pub const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
 // 	encoded - encoded String output
 pub fn encode(input: &str) -> String {
     let mut asciistr: String = String::new();
-    let mut asciivals = Vec::new();
+    let mut asciivals = vec![];
 
     // get ascii codes for each character
     for letter in input.chars() {

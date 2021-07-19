@@ -1,39 +1,26 @@
-extern crate anyhow;
-extern crate argparse;
+#[macro_use]
+extern crate clap;
+use clap::App;
 
+extern crate anyhow;
 use anyhow::Result;
-use argparse::ArgumentParser;
-use argparse::Store;
-use argparse::StoreFalse;
-use argparse::StoreTrue;
 
 mod b64rs;
 
 pub fn main() -> Result<()> {
-    // command line arguments
-    let mut is_encode = false;
-    let mut input: String = String::new();
-    {
-        // parse command line arguments
-        let mut parser = ArgumentParser::new();
-        parser.set_description("Encode or decode a string using Base64.");
-        parser
-            .refer(&mut is_encode)
-            .add_option(&["-e", "--encode"], StoreTrue, "Encode a string")
-            .add_option(&["-d", "--decode"], StoreFalse, "Decode a string")
-            .required();
+    // load cli config from yaml and parse args
+    let yaml = load_yaml!("cli.yml");
+    let matches = App::from_yaml(yaml).get_matches();
 
-        parser
-            .refer(&mut input)
-            .add_argument("input", Store, "String to encode or decode.");
-        parser.parse_args_or_exit();
-    }
+    // store args
+    let encode = matches.is_present("ENCODE");
+    let input_string = matches.value_of("INPUT").unwrap();
 
-    // encode or decode the string
-    if is_encode {
-        println!("{}", b64rs::encode(&input));
+    // encode or decode based on input
+    if encode {
+        println!("{}", b64rs::encode(input_string));
     } else {
-        println!("{}", b64rs::decode(&input));
+        println!("{}", b64rs::decode(input_string));
     }
 
     // program complete

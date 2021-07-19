@@ -13,8 +13,8 @@ pub fn main() -> Result<()> {
     let matches = App::from_yaml(yaml).get_matches();
 
     // store args
-    let encode = matches.is_present("ENCODE");
-    let input_string = matches.value_of("INPUT").unwrap();
+    let encode = matches.is_present("ENCODE"); // true if -e
+    let input_string = matches.value_of("INPUT").unwrap(); // input is required
 
     // encode or decode based on input
     if encode {

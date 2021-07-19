@@ -1,7 +1,6 @@
 // helper fns
 pub fn char_to_bin(input: char) -> String {
-    let x = input as u8;
-    dec_to_bin(x)
+    dec_to_bin(input as u8)
 }
 
 pub fn dec_to_bin(input: u8) -> String {
@@ -30,17 +29,20 @@ pub fn encode(input: &str) -> String {
         let x: String = (char_to_bin(letter)).to_string();
         asciivals.push(x);
     }
-    for val in asciivals {
+
+    // pad ascii values if necessary to make them 8 bits
+    for mut val in asciivals {
         let mut padding: String = String::new();
         if val.len() < 8 {
             let l_padding = 8 - val.len();
             for _i in 0..l_padding {
                 padding += "0";
             }
+            val = format!("{}{}", padding, val);
         }
 
-        let padded: String = format!("{}{}", padding, val);
-        asciistr = format!("{}{}", asciistr, padded);
+        // append the ascii value to the string
+        asciistr = format!("{}{}", asciistr, val);
     }
 
     // divide into groups of 6

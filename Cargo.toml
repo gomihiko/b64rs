@@ -7,4 +7,4 @@ edition = "2018"
 
 [dependencies]
 anyhow = "*"
-argparse = "*"
+clap = {version="~2.27.0", features = ["yaml"]}

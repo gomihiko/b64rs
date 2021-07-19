@@ -5,8 +5,10 @@
 ![MIT license](https://img.shields.io/github/license/gomihiko/b64rs)
 
 
-b64rs is a simple command line tool written in Rust that can encode and decode single lines using base 64 from a command line. 
+b64rs is a simple command line tool written in Rust that can encode and decode single lines using base 64 from a command line.
+
 ![demonstration of the program in a command prompt](https://i.ibb.co/tCS6YR0/repo-scr.png)
+
 ## Building
 Clone the repository, then build using Cargo.
 

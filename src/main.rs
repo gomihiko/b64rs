@@ -7,7 +7,7 @@ use anyhow::Result;
 
 mod b64rs;
 
-pub fn main() -> Result<()> {
+fn main() -> Result<()> {
     // load cli config from yaml and parse args
     let yaml = load_yaml!("cli.yml");
     let matches = App::from_yaml(yaml).get_matches();

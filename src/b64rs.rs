@@ -1,18 +1,30 @@
 // helper fns
+
+// b64 indices string
+const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+fn get_b64_index(chara: char) -> u8 {
+    B64_INDICES.find(chara).unwrap() as u8
+}
+
+fn get_b64_char(index: u8) -> char {
+    B64_INDICES.chars().nth(index.into()).unwrap()
+}
+
+// converts a char to a binary String
 fn char_to_bin(input: char) -> String {
     dec_to_bin(input as u8)
 }
 
+// converts a decimal into a binary String
 fn dec_to_bin(input: u8) -> String {
     format!("{:b}", input)
 }
 
+// converts a binary String into a decimal
 fn binary_to_dec(input: &str) -> u8 {
     u8::from_str_radix(input, 2).unwrap()
 }
-
-// b64 indices string
-const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 // encode
 // encodes a string using base 64.
@@ -21,7 +33,7 @@ const B64_INDICES: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0
 // OUT:
 // 	encoded - encoded String output
 pub fn encode(input: &str) -> String {
-    let mut asciistr: String = String::new();
+    let mut asciistr = String::new();
     let mut asciivals = vec![];
 
     // get ascii codes for each character
@@ -32,7 +44,7 @@ pub fn encode(input: &str) -> String {
 
     // pad ascii values if necessary to make them 8 bits
     for mut val in asciivals {
-        let mut padding: String = String::new();
+        let mut padding = String::new();
         if val.len() < 8 {
             let l_padding = 8 - val.len();
             for _i in 0..l_padding {
@@ -76,9 +88,9 @@ pub fn encode(input: &str) -> String {
     }
 
     // convert decimals to characters in the b64 str
-    let mut encoded: String = String::new();
+    let mut encoded = String::new();
     for decimal in dec {
-        let found_char: char = B64_INDICES.chars().nth(decimal.into()).unwrap();
+        let found_char: char = get_b64_char(decimal);
         encoded.push(found_char);
     }
 
@@ -96,7 +108,7 @@ pub fn decode(input: &str) -> String {
     // convert encoded characters to indices from the b64 string
     let mut indices = vec![];
     for chara in input.chars() {
-        indices.push(B64_INDICES.find(chara).unwrap());
+        indices.push(get_b64_index(chara));
     }
 
     // convert the decimal indices to binary representation
@@ -106,11 +118,11 @@ pub fn decode(input: &str) -> String {
     }
 
     // pad the binary values if necessary
-    let mut bits_str: String = String::new();
+    let mut bits_str = String::new();
     for mut byte in indices_bytes {
         if byte.len() < 6 {
             let padding_amount = 6 - byte.len();
-            let mut padding: String = String::new();
+            let mut padding = String::new();
             for _i in 0..padding_amount {
                 padding += "0";
             }
@@ -132,7 +144,7 @@ pub fn decode(input: &str) -> String {
     }
 
     // decode ascii bytes to characters in str
-    let mut decoded: String = String::new();
+    let mut decoded = String::new();
     for byte in bytes {
         decoded.push((binary_to_dec(&byte)) as char);
     }

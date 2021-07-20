@@ -1,13 +1,15 @@
 #[macro_use]
 extern crate clap;
-use clap::App;
 
 extern crate anyhow;
+
+use clap::App;
+
 use anyhow::Result;
 
 mod b64rs;
 
-fn main() -> Result<()> {
+pub fn main() -> Result<()> {
     // load cli config from yaml and parse args
     let yaml = load_yaml!("cli.yml");
     let matches = App::from_yaml(yaml).get_matches();
@@ -30,21 +32,21 @@ fn main() -> Result<()> {
 #[cfg(test)]
 #[test]
 fn control_test_pass() {
-    assert!(1 == 1); // OK
-}
+    assert_eq!(1, 1);
+} // OK
 
 #[test]
 #[should_panic]
 fn control_test_panic() {
-    panic!("contol test panic");
+    panic!("control test panic");
 }
 
 #[test]
 fn encode_test() {
-    assert!(b64rs::encode("hello world!") == "aGVsbG8gd29ybGQh")
+    assert_eq!(b64rs::encode("hello world!"), "aGVsbG8gd29ybGQh");
 }
 
 #[test]
 fn decode_test() {
-    assert!(b64rs::decode("aGVsbG8gd29ybGQh") == "hello world!")
+    assert_eq!(b64rs::decode("aGVsbG8gd29ybGQh"), "hello world!");
 }
